@@ -21,6 +21,21 @@ const app = new Elysia()
   )
   .listen(3000);
 
+app.get(
+  "/products/:id",
+  ({ params, query }) => {
+    return { id: params.id, sort: query.sort };
+  },
+  {
+    params: t.Object({
+      id: t.Number(),
+    }),
+    query: t.Object({
+      sort: t.Union([t.Literal("asc"), t.Literal("desc")]),
+    }),
+  },
+);
+
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
