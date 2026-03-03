@@ -74,6 +74,23 @@ app.onAfterHandle(({ response }) => {
 
 app.get("/product", () => ({ id: 1, name: "Laptop" }));
 
+app.onError(({ code, set }) => {
+  if (code === "VALIDATION") {
+    set.status = 400;
+    return {
+      success: false,
+      error: "Validation Error",
+    };
+  }
+});
+
+app.post("/login", ({ body }) => body, {
+  body: t.Object({
+    email: t.String({ format: "email" }),
+    password: t.String({ minLength: 8 }),
+  }),
+});
+
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
