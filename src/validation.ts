@@ -64,6 +64,16 @@ app.get("/admin", () => ({ stats: 99 }), {
   },
 });
 
+app.onAfterHandle(({ response }) => {
+  return {
+    success: true,
+    Message: "data tersedia ,",
+    data: response,
+  };
+});
+
+app.get("/product", () => ({ id: 1, name: "Laptop" }));
+
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
