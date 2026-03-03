@@ -36,6 +36,22 @@ app.get(
   },
 );
 
+app.get(
+  "/stats",
+  () => {
+    return {
+      total: 100,
+      active: 50,
+    };
+  },
+  {
+    response: t.Object({
+      total: t.Number(),
+      active: t.Number(),
+    }),
+  },
+);
+
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
