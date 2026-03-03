@@ -52,6 +52,18 @@ app.get(
   },
 );
 
+app.get("/admin", () => ({ stats: 99 }), {
+  beforeHandle({ headers, set }) {
+    if (headers.authorization !== "Bearer 123") {
+      set.status = 401;
+      return {
+        success: false,
+        message: "Unauthorized",
+      };
+    }
+  },
+});
+
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
